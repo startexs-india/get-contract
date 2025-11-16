@@ -7,50 +7,45 @@ export default function Navbar() {
     const [open, setOpen] = useState(false);
 
     return (
-        <nav className="relative w-full bg-gray-900 text-white shadow-md flex justify-between items-center px-5 md:px-10 py-2">
+        <nav className="w-full bg-white text-black shadow-card px-5 md:px-10 py-3 flex justify-between items-center">
 
             {/* Logo */}
-            <Link href="/" className="text-2xl font-semibold">
+            <Link href="/" className="text-2xl font-heading font-semibold hover:text-accent transition">
                 Contract Explorer
             </Link>
 
             {/* Desktop Links */}
-            <div className="hidden md:flex space-x-8 text-sm">
-                <Link href="/" className="hover:text-gray-300">Home</Link>
-                <Link href="/explore" className="hover:text-gray-300">Explore</Link>
-                <Link href="/about" className="hover:text-gray-300">About</Link>
-                <Link href="/contact" className="hover:text-gray-300">Contact</Link>
+            <div className="hidden md:flex space-x-8 text-sm font-medium">
+                <Link href="/" className="hover:text-accent transition">Home</Link>
+                <Link href="/explore" className="hover:text-accent transition">Explore</Link>
+                <Link href="/about" className="hover:text-accent transition">About</Link>
+                <Link href="/contact" className="hover:text-accent transition">Contact</Link>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
                 {/* Login Button */}
-                <div>
-                    <button className="border-2 border-black rounded-lg px-3 py-1 cursor-pointer">
-                        Login
-                    </button>
-                </div>
+                <button className="text-primary font-medium rounded-xl px-4 py-2 shadow-soft hover:bg-gray-400 transition">
+                    Login
+                </button>
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="md:hidden focus:outline-none"
+                    className="md:hidden text-2xl focus:outline-none"
                     onClick={() => setOpen(!open)}
                 >
-                    <span className="text-xl">☰</span>
+                    ☰
                 </button>
-
             </div>
 
             {/* Mobile Menu */}
-            <div className="absolute right-0 top-13 h-screen">
-                {open && (
-                    <div className="md:hidden bg-gray-800 px-4 py-4 space-y-4 text-sm">
-                        <Link href="/" className="block hover:text-gray-300">Home</Link>
-                        <Link href="/explore" className="block hover:text-gray-300">Explore</Link>
-                        <Link href="/about" className="block hover:text-gray-300">About</Link>
-                        <Link href="/contact" className="block hover:text-gray-300">Contact</Link>
-                    </div>
-                )}
-            </div>
+            {open && (
+                <div className="absolute top-16 right-5 bg-primary/90 backdrop-blur-md shadow-card px-6 py-6 rounded-2xl space-y-4 text-sm md:hidden animate-slideUp">
+                    <Link href="/" className="block hover:text-accent transition">Home</Link>
+                    <Link href="/explore" className="block hover:text-accent transition">Explore</Link>
+                    <Link href="/about" className="block hover:text-accent transition">About</Link>
+                    <Link href="/contact" className="block hover:text-accent transition">Contact</Link>
+                </div>
+            )}
 
         </nav>
     );

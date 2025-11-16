@@ -2,9 +2,9 @@ import Footer from '@/components/common/Footer'
 import Navbar from '@/components/common/Navbar'
 import React from 'react'
 
-const MainLayout = ({ children }) => {
+const UserLayout = ({ children }) => {
     return (
-        <div>
+        <div className='bg-white'>
             <Navbar />
             {children}
             <Footer />
@@ -12,4 +12,4 @@ const MainLayout = ({ children }) => {
     )
 }
 
-export default MainLayout
+export default UserLayout
