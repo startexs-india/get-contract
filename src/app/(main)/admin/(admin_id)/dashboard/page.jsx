@@ -1,8 +1,11 @@
+import DashboardPanel from '@/components/admin/DashboardPanel'
 import React from 'react'
 
 const page = () => {
     return (
-        <div>Admin Dashboard</div>
+        <div>
+            <DashboardPanel />
+        </div>
     )
 }
 

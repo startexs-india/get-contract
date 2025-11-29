@@ -43,17 +43,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>
-        <p className="text-lg text-blue-100 mb-6">Create your account and start exploring contracts today.</p>
-        <a
-          href="/signup"
-          className="bg-white text-blue-700 font-medium px-6 py-3 rounded-xl shadow-md hover:bg-gray-100 transition"
-        >
-          Get Started
-        </a>
-      </section>
     </main>
   );
 }

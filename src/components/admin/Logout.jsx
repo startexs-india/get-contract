@@ -8,11 +8,12 @@ const Logout = () => {
 
     useEffect(() => {
         // Clear any stored auth tokens (adjust based on your app)
-        localStorage.removeItem("authToken");
+        localStorage.removeItem("data");
 
         // Redirect after short delay
         const timer = setTimeout(() => {
-            router.push("/login");
+            window.location.reload();
+            router.push("/admin");
         }, 1200);
 
         return () => clearTimeout(timer);
