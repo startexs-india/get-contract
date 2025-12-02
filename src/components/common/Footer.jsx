@@ -24,7 +24,7 @@ export default function Footer() {
                         <li><a href="/about" className="hover:text-accent transition">About</a></li>
                         <li><a href="/contact" className="hover:text-accent transition">Contact</a></li>
                         <li><a href="/terms" className="hover:text-accent transition">Terms & Conditions</a></li>
-                        <li><a href="/privacy" className="hover:text-accent transition">Privacy Policy</a></li>
+                        <li><a href="/privacypolicy" className="hover:text-accent transition">Privacy Policy</a></li>
                     </ul>
                 </div>
 

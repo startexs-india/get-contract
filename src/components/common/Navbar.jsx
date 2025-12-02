@@ -76,7 +76,7 @@ export default function Navbar() {
     }, [open]);
 
     return (
-        <nav className="w-full text-black px-5 sm:px-10 md:px-20 py-5 rounded-md shadow-md relative">
+        <nav className={`w-full text-black px-5 sm:px-10 md:px-20 py-5 shadow-md bg-white z-50`}>
             <div className="flex justify-between items-center text-lg">
 
                 {/* Logo */}
@@ -125,17 +125,15 @@ export default function Navbar() {
                     {
                         isLogin ?
                             <div className="flex gap-3 items-center">
-                                <div className="text-primary shadow-soft border-[#0b2543] transition border-3 rounded-full bg-gray-100 hover:text-white cursor-pointer flex items-center justify-center w-10 h-10">
+                                <div className="text-primary shadow-soft border-[#084c9d] transition border-3 rounded-full bg-gray-100  cursor-pointer flex items-center justify-center w-10 h-10">
                                     {user ? (
                                         //<p className="text-2xl font-semibold text-orange-600">{user?.slice(0, 1)}</p>
-                                        <p className="text-2xl font-semibold hover:text-[#084c9d]">{typeof user === "string"
-                                            ? user.slice(0, 1)
-                                            : user?.username?.slice(0, 1) || 'U'}</p>
+                                        <p className="text-2xl font-semibold hover:text-[#084c9d]">{user?.name?.slice(0, 1)}</p>
                                     ) : (
                                         <UserRound size={24} color="gray" />
                                     )}
                                 </div>
-                                <button className="hidden md:flex border-2 px-2 py-1 text-lg rounded-md cursor-pointer hover:bg-[#084c9d] hover:text-white transition-all delay-200 items-center gap-1" onClick={() => logout()}>Logout
+                                <button className="hidden md:flex border-2 px-2 py-1 text-lg rounded-md hover:rounded-lg cursor-pointer hover:bg-[#084c9d] hover:text-white transition-all delay-200 items-center gap-1" onClick={() => logout()}>Logout
                                     <LogOut size={18} />
                                 </button>
                             </div>

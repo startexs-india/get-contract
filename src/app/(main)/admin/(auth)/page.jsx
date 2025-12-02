@@ -1,6 +1,8 @@
 "use client";
 import logo from '@/../public/logo.svg';
 import { useAppContext } from '@/context/AppContext';
+import { callApi } from '@/utils/api';
+import { Eye, EyeClosed } from 'lucide-react';
 import Image from "next/image";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -11,39 +13,35 @@ export default function AdminLoginPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isLogin, setIsLogin] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [logging, setLogging] = useState(false);
     const [loginError, setLoginError] = useState("");
     const route = useRouter();
 
-    const { login, setLogin, setUser } = useAppContext();
+    const { isLogin, setIsLogin } = useAppContext();
 
 
     useEffect(() => {
-
         if (isLogin) {
             route.push("/admin/dashboard");
         }
-
-
     }, [isLogin, route]);
 
     const handleLogin = async (e) => {
         e.preventDefault(); // Prevent page reload on form submit
         console.log(email, password);
 
-        if (email == "" && password == "") {
+        if (email != "" && password != "") {
             setLogging(true);
+            const body = {
+                email,
+                password
+            }
             await loginApiCall(body);
             console.log("Login Data:", body);
-            setTimeout(() => {
-                setIsLogin(true);
-
-            }, 3000);
-
         }
         else {
-            setLoginError("Incorrect email or password");
+            setLoginError("Enter email or password");
         }
 
         setTimeout(() => {
@@ -61,10 +59,15 @@ export default function AdminLoginPage() {
                 return;
             }
             else if (response.success) {
-
+                console.log(response.data);
+                const data = {
+                    token: response.token,
+                    user: response.user,
+                }
+                localStorage.setItem("data", JSON.stringify(data));
+                setIsLogin(true);
                 setTimeout(() => {
                     setLogging(false);
-                    setLogin(true);
                     route.push("/admin/dashboard");  // Redirect to login page
                 }, 2000);
             }
@@ -89,7 +92,7 @@ export default function AdminLoginPage() {
 
                 {/* TITLE */}
                 <div className="text-2xl font-bold text-center text-dark mb-6">
-                    <h2 className=''>
+                    <h2 className='text-[#084c9d]'>
                         Hi Admin,
                     </h2>
                     <span className='text-gray-600 text-xl'>
@@ -120,25 +123,35 @@ export default function AdminLoginPage() {
                         />
                     </div>
 
-                    <div>
+                    <div className="relative">
                         <label className="block text-gray-600 mb-1 font-medium">Password</label>
+
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="********"
                             className="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary bg-white"
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+
+                        {/* Icon Button */}
+                        <span
+                            className="absolute right-3 top-9 cursor-pointer"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <Eye /> : <EyeClosed />}
+                        </span>
                     </div>
+
 
                     {/* LOGIN BUTTON */}
                     <button
                         type="submit"
                         disabled={logging}
                         className={`mt-5 w-full px-3 py-1 rounded-xl shadow-md border-2 border-gray-400 text-lg
-                            cursor-pointer hover:text-white hover:bg-blue-500
-                            ${logging ? "bg-blue-500 text-white cursor-not-allowed" : "text-black"}`}
+                            cursor-pointer text-white hover:bg-[#094185]
+                            ${logging ? "bg-[#094185] cursor-not-allowed" : "text-black bg-[#084c9d]"}`}
                     >
                         {logging ? (
                             <div className="flex justify-center items-center gap-2">

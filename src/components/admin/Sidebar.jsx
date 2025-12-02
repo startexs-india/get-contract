@@ -20,9 +20,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     ];
 
     return (
-        <div className="w-64 h-full bg-white shadow-card border-r py-5 px-4 flex flex-col">
+        <div className="w-60 h-full bg-white shadow-lg py-5 flex flex-col">
 
-            <h2 className="text-2xl font-heading font-semibold mb-8">Admin Panel</h2>
+            <h2 className="text-2xl font-heading font-semibold mb-8 px-4">Admin Panel</h2>
 
             {/* Navigation Tabs */}
             <nav className="flex flex-col space-y-4">
@@ -30,9 +30,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex items-center gap-4 text-lg px-4 py-3 rounded-xl text-left transition font-medium
+                        className={`flex items-center gap-4 text-[16px] px-4 py-3 rounded-r-lg text-left transition font-medium
                             ${activeTab === tab.id
-                                ? "bg-blue-500 text-white shadow"
+                                ? "bg-[#084c9d] text-white shadow"
                                 : "text-gray-700 hover:bg-blue-300"
                             }`}
                     >

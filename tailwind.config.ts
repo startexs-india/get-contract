@@ -6,14 +6,10 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: "#2563eb",   // blue-600
-                secondary: "#0ea5e9", // sky-500
-                accent: "#14b8a6",    // teal-500
-                dark: "#0f172a",      // slate-900
-                light: "#f8fafc",     // slate-50
-                danger: "#dc2626",    // red-600
-                success: "#16a34a",   // green-600
-                warning: "#f59e0b",   // amber-500
+                primary: "#084c9d",
+                footer: "#0b2543",
+                button: "#2e5f9b",
+                button_hover: "#084c9d",
             },
 
             // 🖋 Fonts

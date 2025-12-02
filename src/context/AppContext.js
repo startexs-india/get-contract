@@ -7,7 +7,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(false);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState();
 
     const router = useRouter();
 
@@ -16,9 +16,10 @@ export const AppProvider = ({ children }) => {
         if (dataString) {
             try {
                 const data = JSON.parse(dataString);
-                if (data.authToken && data.username) {
+                if (data.token && data.user) {
+                    //console.log("data.user: ", data.user)
                     setIsLogin(true);
-                    setUser(String(data.username));
+                    setUser(data?.user);
                 }
             } catch {
                 // invalid JSON in localStorage, ignore or clear
