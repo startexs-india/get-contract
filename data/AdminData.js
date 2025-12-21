@@ -18,13 +18,15 @@ export const recentUsersStatic = [
 ];
 
 // data/users.js
-export const users = [
+export const dummyUsers = [
     {
         id: 1,
         name: "Rahul Sharma",
         email: "rahul@example.com",
         role: "Admin",
         status: "Active",
+        subscription: "active",
+        subscriptionEndDate: "2026-05-12"
     },
     {
         id: 2,
@@ -818,5 +820,334 @@ export const dummyTenders = [
         "status": "ACTIVE",
         "cancelReason": "",
         "cancelTime": null
-    }
+    },
+    {
+        "tenderId": "TND007",
+        "generalInformation": {
+            "bidParts": 2,
+            "category": "ITEM RATE",
+            "tenderCreator": "Mr. Ajeet Kumar (MD)",
+            "organizationHierarchy": [
+                "Government of Bihar",
+                "BFDCL",
+                "Head Office"
+            ],
+            "systemTenderNo": "118315",
+            "tenderReferenceNo": "BFDCL/NIQ/2026-27/A",
+            "tenderTitle": "Purchase of Kendu Leaves Lots",
+            "procurementCategory": "GENERAL",
+            "tenderCurrency": "INR",
+            "biddingCurrency": "INR",
+            "tenderType": "Open Tender",
+            "estimatedValueVisibilityFlag": "N",
+            "minimumNumberOfBids": 2,
+            "rankingSequence": "H1 Ranking",
+            "offerValidityInDays": 365,
+            "tenderIssuingAuthorityName": "Shri Alok Kumar",
+            "tenderApprovingAuthorityName": "Shri Alok Kumar",
+            "detailedDescription": "Advance purchase of Kendu leaves from Aurangabad range.",
+            "shortTenderReason": "Seasonal tender",
+            "NIT": "Tender for purchase of Kendu leaves.",
+            "createdate": 1700000000,
+            "createdOn": {
+                "raw": "2025-12-01T10:00:00Z",
+                "formatted": "01 Dec 2025"
+            }
+        },
+        "dateSchedule": {
+            "bidSubmissionStartDate": {
+                "raw": "2025-12-02T10:00:00Z",
+                "formatted": "02 Dec 2025"
+            },
+            "bidSubmissionDueDate": {
+                "raw": "2025-12-20T17:00:00Z",
+                "formatted": "20 Dec 2025"
+            },
+            "bidOpenDate": {
+                "raw": "2025-12-21T15:00:00Z",
+                "formatted": "21 Dec 2025"
+            },
+            "physicalDocSubmissionEndDate": {
+                "raw": "2025-12-20T00:00:00Z",
+                "formatted": "20 Dec 2025"
+            }
+        },
+        "preBidDiscussion": {
+            "discussionType": "OFFLINE",
+            "meetingStartDate": {
+                "raw": "2025-12-05T14:00:00Z",
+                "formatted": "05 Dec 2025"
+            },
+            "meetingEndDate": {
+                "raw": "2025-12-05T15:00:00Z",
+                "formatted": "05 Dec 2025"
+            },
+            "venue": "BFDCL Head Office",
+            "remarks": ""
+        },
+        "payments": [
+            {
+                "paymentType": "EMD",
+                "amount": 25000,
+                "paymentMode": "Challan/IPG",
+                "paymentCurrency": "INR",
+                "exemptionAllowed": "N",
+                "exemptionReason": ""
+            }
+        ],
+        "generalParticulars": [
+            {
+                "label": "Name of Bidder",
+                "value": ""
+            },
+            {
+                "label": "Address",
+                "value": ""
+            }
+        ],
+        "termsAndConditions": [
+            {
+                "clauseNo": "01",
+                "specification": "Standard terms apply",
+                "attachment": ""
+            }
+        ],
+        "attachments": [
+            {
+                "label": "NIQ",
+                "fileName": "niq.pdf",
+                "url": "https://example.com/niq.pdf"
+            }
+        ],
+        "requiredAttachments": [
+            {
+                "supportingDocument": "PAN Card",
+                "mandatory": "Y",
+                "allowExemption": "N"
+            }
+        ],
+        "boq": [
+            {
+                "itemName": "Kendu Leaves Lot A",
+                "quantity": 1,
+                "uom": "Lot",
+                "rate": 0
+            }
+        ],
+        "meta": {
+            "createdBy": "System",
+            "createdOn": {
+                "raw": "2025-12-01T10:00:00Z",
+                "formatted": "01 Dec 2025"
+            },
+            "source": "BFDCL",
+            "sourceUrl": "https://bihar.gov.in"
+        },
+        "isDeleted": false,
+        "isActive": true,
+        "adminId": null,
+        "status": "ACTIVE",
+        "cancelReason": "",
+        "cancelTime": null
+    },
+    {
+        "tenderId": "TND008",
+        "generalInformation": {
+            "bidParts": 2,
+            "category": "ITEM RATE",
+            "tenderCreator": "Mr. Ajeet Kumar (MD)",
+            "organizationHierarchy": [
+                "Government of Bihar",
+                "BFDCL",
+                "Head Office"
+            ],
+            "systemTenderNo": "118315",
+            "tenderReferenceNo": "BFDCL/NIQ/2026-27/A",
+            "tenderTitle": "Purchase of Kendu Leaves Lots",
+            "procurementCategory": "GENERAL",
+            "tenderCurrency": "INR",
+            "biddingCurrency": "INR",
+            "tenderType": "Open Tender",
+            "estimatedValueVisibilityFlag": "N",
+            "minimumNumberOfBids": 2,
+            "rankingSequence": "H1 Ranking",
+            "offerValidityInDays": 365,
+            "tenderIssuingAuthorityName": "Shri Alok Kumar",
+            "tenderApprovingAuthorityName": "Shri Alok Kumar",
+            "detailedDescription": "Advance purchase of Kendu leaves from Aurangabad range.",
+            "shortTenderReason": "Seasonal tender",
+            "NIT": "Tender for purchase of Kendu leaves.",
+            "createdate": 1700000000,
+            "createdOn": {
+                "raw": "2025-12-01T10:00:00Z",
+                "formatted": "01 Dec 2025"
+            }
+        },
+        "dateSchedule": {
+            "bidSubmissionStartDate": {
+                "raw": "2025-12-02T10:00:00Z",
+                "formatted": "02 Dec 2025"
+            },
+            "bidSubmissionDueDate": {
+                "raw": "2025-12-20T17:00:00Z",
+                "formatted": "20 Dec 2025"
+            },
+            "bidOpenDate": {
+                "raw": "2025-12-21T15:00:00Z",
+                "formatted": "21 Dec 2025"
+            },
+            "physicalDocSubmissionEndDate": {
+                "raw": "2025-12-20T00:00:00Z",
+                "formatted": "20 Dec 2025"
+            }
+        },
+        "preBidDiscussion": {
+            "discussionType": "OFFLINE",
+            "meetingStartDate": {
+                "raw": "2025-12-05T14:00:00Z",
+                "formatted": "05 Dec 2025"
+            },
+            "meetingEndDate": {
+                "raw": "2025-12-05T15:00:00Z",
+                "formatted": "05 Dec 2025"
+            },
+            "venue": "BFDCL Head Office",
+            "remarks": ""
+        },
+        "payments": [
+            {
+                "paymentType": "EMD",
+                "amount": 25000,
+                "paymentMode": "Challan/IPG",
+                "paymentCurrency": "INR",
+                "exemptionAllowed": "N",
+                "exemptionReason": ""
+            }
+        ],
+        "generalParticulars": [
+            {
+                "label": "Name of Bidder",
+                "value": ""
+            },
+            {
+                "label": "Address",
+                "value": ""
+            }
+        ],
+        "termsAndConditions": [
+            {
+                "clauseNo": "01",
+                "specification": "Standard terms apply",
+                "attachment": ""
+            }
+        ],
+        "attachments": [
+            {
+                "label": "NIQ",
+                "fileName": "niq.pdf",
+                "url": "https://example.com/niq.pdf"
+            }
+        ],
+        "requiredAttachments": [
+            {
+                "supportingDocument": "PAN Card",
+                "mandatory": "Y",
+                "allowExemption": "N"
+            }
+        ],
+        "boq": [
+            {
+                "itemName": "Kendu Leaves Lot A",
+                "quantity": 1,
+                "uom": "Lot",
+                "rate": 0
+            }
+        ],
+        "meta": {
+            "createdBy": "System",
+            "createdOn": {
+                "raw": "2025-12-01T10:00:00Z",
+                "formatted": "01 Dec 2025"
+            },
+            "source": "BFDCL",
+            "sourceUrl": "https://bihar.gov.in"
+        },
+        "isDeleted": false,
+        "isActive": true,
+        "adminId": null,
+        "status": "ACTIVE",
+        "cancelReason": "",
+        "cancelTime": null
+    },
+
 ];
+
+
+export const dummyApplications = [
+    {
+        "id": "APP-101",
+        "bidderName": "Rahul Sharma",
+        "tenderId": "TND-00045",
+        "tenderTitle": "Road Construction Project Phase-II",
+        "amount": "₹12,50,000",
+        "date": "2025-01-12",
+        "status": "PENDING",
+        "documents": [
+            { name: "GST Certificate.pdf", url: "/docs/gst.pdf" },
+            { name: "PAN Card.jpg", url: "/docs/pan.jpg" },
+        ]
+    },
+    {
+        "id": "APP-102",
+        "bidderName": "BuildTech Infra Pvt Ltd",
+        "tenderId": "TND-00110",
+        "tenderTitle": "Office Furniture Supply & Installation",
+        "amount": "₹7,90,000",
+        "date": "2025-01-15",
+        "status": "PENDING",
+        "documents": [
+            { name: "GST Certificate.pdf", url: "/docs/gst.pdf" },
+            { name: "PAN Card.jpg", url: "/docs/pan.jpg" },
+        ]
+    },
+    {
+        "id": "APP-103",
+        "bidderName": "Vishwakarma Engineering",
+        "tenderId": "TND-00087",
+        "tenderTitle": "Bridge Repair & Maintenance Work",
+        "amount": "₹18,75,000",
+        "date": "2025-01-08",
+        "status": "PENDING",
+        "documents": [
+            { name: "GST Certificate.pdf", url: "/docs/gst.pdf" },
+            { name: "PAN Card.jpg", url: "/docs/pan.jpg" },
+        ]
+    },
+    {
+        "id": "APP-104",
+        "bidderName": "Shree Construction Co.",
+        "tenderId": "TND-00156",
+        "tenderTitle": "Warehouse Roofing Material Supply",
+        "amount": "₹3,40,000",
+        "date": "2025-01-18",
+        "status": "PENDING",
+        "documents": [
+            { name: "GST Certificate.pdf", url: "/docs/gst.pdf" },
+            { name: "PAN Card.jpg", url: "/docs/pan.jpg" },
+        ]
+    },
+    {
+        "id": "APP-105",
+        "bidderName": "Excel Engineering Works",
+        "tenderId": "TND-00099",
+        "tenderTitle": "Highway Safety Barriers Installation",
+        "amount": "₹22,10,000",
+        "date": "2025-01-20",
+        "status": "PENDING",
+        "documents": [
+            { name: "GST Certificate.pdf", url: "/docs/gst.pdf" },
+            { name: "PAN Card.jpg", url: "/docs/pan.jpg" },
+        ]
+    }
+]
+

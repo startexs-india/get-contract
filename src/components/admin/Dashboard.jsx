@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { statsDataStatic, recentTendersStatic, recentUsersStatic } from "../../../data/AdminData.js";
 import Loader from "../common/Loader";
-import RecentTenders from "./ui/RecentTenders.jsx";
-import RecentUsers from "./ui/RecentUsers.jsx";
+import RecentTenders from "./Cards/RecentTenders.jsx";
+import RecentUsers from "./Cards/RecentUsers.jsx";
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(false);

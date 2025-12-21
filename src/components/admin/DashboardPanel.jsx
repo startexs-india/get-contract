@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Sidebar from "./Sidebar";
 import Profile from "./Profile";
 import ManageUser from "./ManageUser";
@@ -10,69 +10,75 @@ import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/AppContext";
 import { ArrowBigRightDash, SquareX } from "lucide-react";
 import Topbar from "./Topbar";
+import PendingApplication from "./PendingApplication";
 
 const DashboardPanel = () => {
-
     const [activeTab, setActiveTab] = useState("dashboard");
     const [closePanel, setClosePanel] = useState(true);
+
+    const sidebarRef = useRef(null);
 
     const { isLogin } = useAppContext();
     const route = useRouter();
 
-    // redirect when not logged in
+    // Redirect if not logged in
     useEffect(() => {
         if (!isLogin) route.push("/admin");
     }, [isLogin, route]);
 
-    // Disable scroll when sidebar is open (mobile only)
+    // Disable body scroll when sidebar is open
     useEffect(() => {
         document.body.style.overflow = closePanel ? "auto" : "hidden";
     }, [closePanel]);
 
+    // Close sidebar when clicking outside (mobile)
+    useEffect(() => {
+        if (closePanel) return;
+
+        const handleClickOutside = (e) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+                setClosePanel(true);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [closePanel]);
+
+    // Close sidebar when tab selected
+    const handleTabSelect = (tab) => {
+        setActiveTab(tab);
+        setClosePanel(true);
+    };
+
     return (
         <div className="flex bg-gray-100 h-screen overflow-hidden">
 
-            {/* ---------------- MOBILE SCREEN (< md) ---------------- */}
-            <div className="md:hidden">
-
-                {/* Toggle Button */}
-                <button
-                    className="absolute top-4 left-0 z-50 bg-[#084c9d] p-2 rounded-r-md"
-                    onClick={() => setClosePanel(!closePanel)}
-                >
-                    {closePanel ? (
-                        <ArrowBigRightDash size={20} color="white" />
-                    ) : (
-                        <SquareX size={26} color="white" />
-                    )}
-                </button>
-
-                {/* Slide-in Sidebar */}
-                {!closePanel && (
-                    <div className="fixed top-0 left-0 h-full w-[250px] bg-white shadow-lg z-40">
-                        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-                    </div>
-                )}
-            </div>
-
-            {/* ---------------- TABLET SCREEN (md to xl) ---------------- */}
-            <div className="hidden md:flex xl:hidden w-full fixed top-0 z-40">
-                <Topbar activeTab={activeTab} setActiveTab={setActiveTab} />
-            </div>
-
-            {/* ---------------- DESKTOP SCREEN (xl and above) ---------------- */}
+            {/* ---------- DESKTOP SIDEBAR (xl) ---------- */}
             <div className="hidden xl:flex h-full">
                 <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
 
-            {/* ---------------- MAIN CONTENT ---------------- */}
-            <div className="flex-1 p-4 overflow-y-auto h-screen 
-                md:mt-[60px] xl:mt-0">
-                {activeTab === "dashboard" && <Dashboard />}
-                {activeTab === "profile" && <Profile />}
-                {activeTab === "users" && <ManageUser />}
-                {activeTab === "tenders" && <ManageTender />}
-                {activeTab === "logout" && <Logout />}
+            {/* ---------- RIGHT SIDE (Content + Tablet Topbar) ---------- */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+
+                {/* TABLET TOPBAR (md–xl) */}
+                <div className="flex xl:hidden sticky top-0 z-40 bg-white shadow-sm">
+                    <Topbar activeTab={activeTab} setActiveTab={setActiveTab} />
+                </div>
+
+
+
+                {/* MAIN CONTENT */}
+                <div className="flex-1 p-4 overflow-y-auto h-screen">
+                    {activeTab === "dashboard" && <Dashboard />}
+                    {activeTab === "profile" && <Profile />}
+                    {activeTab === "users" && <ManageUser />}
+                    {activeTab === "tenders" && <ManageTender />}
+                    {activeTab === "pendingApplication" && <PendingApplication />}
+                    {activeTab === "logout" && <Logout />}
+                </div>
+
             </div>
         </div>
     );

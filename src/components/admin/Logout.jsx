@@ -1,36 +1,40 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 
 const Logout = () => {
     const router = useRouter();
 
-    useEffect(() => {
-        // Clear any stored auth tokens (adjust based on your app)
-        localStorage.removeItem("data");
-
-        // Redirect after short delay
-        const timer = setTimeout(() => {
-            window.location.reload();
-            router.push("/admin");
-        }, 1200);
-
-        return () => clearTimeout(timer);
-    }, [router]);
+    // MANUAL LOGOUT ONLY
+    const handleLogout = () => {
+        localStorage.removeItem("data"); // remove auth/session
+        router.push("/admin");           // redirect to login
+        window.location.reload();        // reload to reset states
+    };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center justify-center bg-gray-100 px-4 mt-20">
 
-            <div className="bg-white p-10 rounded-xl shadow-card text-center animate-fade">
+            <div className="bg-white p-10 rounded-xl shadow-lg text-center w-full max-w-md">
 
-                <h1 className="text-3xl font-heading font-semibold text-red-600 mb-4">
-                    Logging Out...
+                <div className="flex justify-center mb-4">
+                    <LogOut size={50} className="text-red-600" />
+                </div>
+                <h1 className="text-3xl font-semibold text-red-600 mb-3">
+                    Logout
                 </h1>
-
-                <p className="text-gray-600">
-                    Please wait while we securely sign you out.
+                <p className="text-gray-600 mb-6">
+                    Click the button below to log out.
                 </p>
+                <button
+                    onClick={handleLogout}
+                    className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center gap-2 mx-auto transition-all"
+                >
+                    <LogOut size={20} />
+                    Logout
+                </button>
 
             </div>
         </div>

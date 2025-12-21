@@ -1,24 +1,52 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import TenderCard from "../ui/TenderCard";
+import TenderCard from "../Cards/TenderCard";
 import { exportToExcel } from "../../../utils/Export/exportExcel";
 import { FileSpreadsheet, FileText, PlusCircle } from "lucide-react";
 import { exportToPDF } from "@/utils/Export/exportPdf";
-import UploadExcel from "../ui/UploadExcel";
+import UploadExcel from "../Cards/UploadExcel";
 import SingleTenderPage from "./SingleTenderPage";
-import { dummyTenders } from "../../../../data/AdminData";
+import { callApi } from "@/utils/api";
+import Loader from "@/components/common/Loader";
 
 export default function ViewTenderPage({ setAddTender }) {
-    const [search, setSearch] = useState("");
-    const [tenders, setTenders] = useState(dummyTenders);
-    const [openUpload, setOpenUpload] = useState(false);
 
-    // Tracks the tender opened in the SingleTenderPage
-    const [selectedTender, setSelectedTender] = useState(null);
+    const [search, setSearch] = useState("");
+    const [tenders, setTenders] = useState([]);
+    const [openUpload, setOpenUpload] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [selectedTenderId, setSelectedTenderId] = useState(null);
+
+    const fetchAllTenders = async () => {
+        setLoading(true);
+        setErrorMessage("");
+
+        try {
+            const response = await callApi("/tender/list", "GET");
+
+            if (response?.success) {
+                setTenders(response.data);
+            } else {
+                setErrorMessage(response?.message || "Error fetching tenders");
+            }
+        } catch (error) {
+            setErrorMessage(error?.message || "Server Error");
+        }
+        finally {
+            setLoading(false);
+        }
+
+    };
 
     useEffect(() => {
-        if (selectedTender) {
+        fetchAllTenders();
+    }, []);
+
+
+    useEffect(() => {
+        if (selectedTenderId) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
@@ -26,8 +54,7 @@ export default function ViewTenderPage({ setAddTender }) {
         return () => {
             document.body.style.overflow = "auto";
         };
-    }, [selectedTender]);
-
+    }, [selectedTenderId]);
 
     // FIXED SEARCH — now searches inside your schema correctly
     const filteredTenders = tenders?.filter((t) => {
@@ -42,19 +69,26 @@ export default function ViewTenderPage({ setAddTender }) {
         );
     });
 
-    // Handle save from SingleTenderPage
-    const handleTenderUpdate = (updatedTender) => {
-        setTenders((prev) =>
-            prev.map((t) => (t.tenderId === updatedTender.tenderId ? updatedTender : t))
-        );
-        setSelectedTender(null);
-    };
+    if (loading) {
+        return (
+            <div>
+                <Loader />
+            </div>
+        )
+    }
+
+    if (errorMessage) {
+        return (
+            <div>
+                <h2>{errorMessage}</h2>
+            </div>
+        )
+    }
 
     return (
         <div className="">
-
             {/* 🔹 HEADER BAR */}
-            <div className="flex flex-col md:flex-col justify-between items-center mb-4">
+            <div className="flex flex-col lg:flex-row justify-between items-center gap-3 mb-4">
                 <input
                     type="text"
                     placeholder="Search tenders..."
@@ -64,32 +98,41 @@ export default function ViewTenderPage({ setAddTender }) {
                 />
 
                 <div className="flex gap-2">
+
+                    {/* Upload Excel */}
                     <button
                         onClick={() => setOpenUpload(true)}
                         className="flex items-center gap-2 bg-[#2e5f9b] text-white px-4 py-2 rounded-lg hover:bg-[#084c9d]"
                     >
-                        <PlusCircle size={20} /> Upload Tender Excel
+                        <PlusCircle size={20} />
+                        <span className="flex">Upload Excel</span>
                     </button>
 
+                    {/* Add New Tender */}
                     <button
                         onClick={() => setAddTender(true)}
                         className="flex items-center gap-2 bg-[#2e5f9b] text-white px-4 py-2 rounded-lg hover:bg-[#084c9d]"
                     >
-                        <PlusCircle size={20} /> Add New Tender
+                        <PlusCircle size={20} />
+                        <span className="flex">New Tender</span>
                     </button>
 
+                    {/* Export Excel */}
                     <button
                         onClick={() => exportToExcel(filteredTenders)}
                         className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                     >
-                        <FileSpreadsheet size={18} /> Export to Excel
+                        <FileSpreadsheet size={18} />
+                        <span className="flex">Excel</span>
                     </button>
 
+                    {/* Export PDF */}
                     <button
                         onClick={() => exportToPDF(filteredTenders)}
                         className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                     >
-                        <FileText size={18} /> Export to PDF
+                        <FileText size={18} />
+                        <span className="flex">PDF</span>
                     </button>
                 </div>
             </div>
@@ -104,7 +147,7 @@ export default function ViewTenderPage({ setAddTender }) {
                         <th className="p-2">Department</th>
                         <th className="p-2">End Date</th>
                         <th className="p-2">Status</th>
-                        <th className="p-2">Visiablity</th>
+                        {/* <th className="p-2">Visiablity</th> */}
                         <th className="pr-5 p-2 text-end">Action</th>
                     </tr>
                 </thead>
@@ -112,9 +155,9 @@ export default function ViewTenderPage({ setAddTender }) {
                 <tbody>
                     {filteredTenders?.map((tender) => (
                         <TenderCard
-                            key={tender.tenderId}
+                            key={tender._id}
                             tender={tender}
-                            singleTenderpageModel={() => setSelectedTender(tender)}
+                            onOpenTender={() => setSelectedTenderId(tender._id)}
                         />
                     ))}
                 </tbody>
@@ -129,11 +172,10 @@ export default function ViewTenderPage({ setAddTender }) {
             )}
 
             {/* 🔹 SINGLE TENDER VIEW / EDIT MODAL */}
-            {selectedTender && (
+            {selectedTenderId && (
                 <SingleTenderPage
-                    tenderData={selectedTender}
-                    onClose={() => setSelectedTender(null)}
-                    onSave={handleTenderUpdate}
+                    tender_id={selectedTenderId}
+                    onClose={() => setSelectedTenderId(null)}
                 />
             )}
         </div>

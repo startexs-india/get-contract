@@ -3,7 +3,7 @@
 import CryptoJS from "crypto-js";
 
 // Change this key for your app (keep it secret!)
-const SECRET_KEY = "your-32-char-secret-key-1234567890";
+const SECRET_KEY = "AVMUOGoJQI9Dt0yC0wqNYO9GxQnPN1YVPOjEbTg0PkQ";
 
 /**
  * Encrypt any JSON-serializable data

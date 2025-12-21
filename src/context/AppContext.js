@@ -1,4 +1,5 @@
 'use client';
+import { decryptData, encryptData } from "@/utils/cryptoUtils";
 import { useRouter } from "next/navigation";
 import { createContext, useState, useContext, useEffect } from "react";
 
@@ -15,9 +16,10 @@ export const AppProvider = ({ children }) => {
         const dataString = localStorage.getItem("data");
         if (dataString) {
             try {
+                //const data = decryptData(dataString)
+                //console.log("Decrypted data: ", data);
                 const data = JSON.parse(dataString);
-                if (data.token && data.user) {
-                    //console.log("data.user: ", data.user)
+                if (data.accessToken && data.user) {
                     setIsLogin(true);
                     setUser(data?.user);
                 }

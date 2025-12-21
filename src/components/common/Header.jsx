@@ -32,13 +32,16 @@ export default function Header() {
     const [activeDropdown, setActiveDropdown] = useState(null);
 
     return (
-        <div className="w-full bg-[#084c9d] text-white shadow-sm border-b z-40 flex items-center justify-center py-3 relative">
+        <div className="w-full bg-[#084c9d] text-white shadow-sm border-b sticky top-0 z-40 py-3 rounded-b-md">
 
-            <div className="flex gap-8 items-center">
+            {/* Horizontal scroll container */}
+            <div className="flex items-center justify-start lg:justify-center gap-8 px-4 
+                    overflow-x-auto whitespace-nowrap scrollbar-hide">
+
                 {headerLinks.map((item, index) => (
                     <div
                         key={index}
-                        className="relative"
+                        className="relative inline-block"
                         onMouseEnter={() => item.dropdown && setActiveDropdown(index)}
                         onMouseLeave={() => setActiveDropdown(null)}
                     >
@@ -47,7 +50,7 @@ export default function Header() {
                             <Link
                                 href={item.href}
                                 className={`text-sm font-medium transition-all duration-300 
-                                    ${pathname === item.href
+                            ${pathname === item.href
                                         ? "text-blue-300 border-b-2 border-blue-300"
                                         : "hover:text-blue-300"
                                     }`}
@@ -56,8 +59,8 @@ export default function Header() {
                             </Link>
                         ) : (
                             <button
-                                className={`flex items-center gap-1 text-sm font-medium pb-2 transition-all duration-300 
-                                    ${pathname.includes("/tender")
+                                className={`flex items-center gap-1 text-sm font-medium transition-all duration-300 
+                            ${pathname.includes("/tender")
                                         ? "text-blue-300 border-b-2 border-blue-300"
                                         : "hover:text-blue-300"
                                     }`}
@@ -70,8 +73,6 @@ export default function Header() {
                         {item.dropdown && activeDropdown === index && (
                             <div
                                 className="absolute top-full left-0 mt-2 bg-white text-black w-52 rounded-md shadow-lg py-2 z-50"
-                                onMouseEnter={() => setActiveDropdown(index)}   // keep open
-                                onMouseLeave={() => setActiveDropdown(null)}    // close only after full leave
                             >
                                 {item.dropdown.map((sub, idx) => (
                                     <div key={idx} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
@@ -82,7 +83,9 @@ export default function Header() {
                         )}
                     </div>
                 ))}
+
             </div>
         </div>
+
     );
 }

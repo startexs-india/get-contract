@@ -59,12 +59,10 @@ export default function AdminLoginPage() {
                 return;
             }
             else if (response.success) {
+
                 console.log(response.data);
-                const data = {
-                    token: response.token,
-                    user: response.user,
-                }
-                localStorage.setItem("data", JSON.stringify(data));
+
+                localStorage.setItem("data", JSON.stringify(response.data));
                 setIsLogin(true);
                 setTimeout(() => {
                     setLogging(false);
@@ -74,7 +72,7 @@ export default function AdminLoginPage() {
 
         } catch (err) {
             console.error(err);
-            setErrorMsg("Server error. Please try again.");
+            setLoginError("Server error. Please try again.");
         } finally {
             setLogging(false);
         }

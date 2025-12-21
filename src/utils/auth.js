@@ -4,7 +4,7 @@
 export function getToken() {
     const data = localStorage.getItem("data");
     if (!data) return null;
-    return JSON.parse(data).authToken;
+    return JSON.parse(data).accessToken;
 }
 
 // Create Authorization header (Bearer)

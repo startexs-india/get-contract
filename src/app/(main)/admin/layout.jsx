@@ -1,3 +1,4 @@
+import Header from '@/components/common/Header';
 import Navbar from '@/components/common/Navbar'
 
 const AdminLayout = ({ children }) => {
@@ -5,6 +6,9 @@ const AdminLayout = ({ children }) => {
     return (
         <div className="bg-white min-h-screen text-black font-sans">
             <Navbar />
+            <div className='sticky top-0'>
+                <Header />
+            </div>
             {children}
         </div>
     );

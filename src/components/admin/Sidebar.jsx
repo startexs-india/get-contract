@@ -16,11 +16,12 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
         { id: "profile", label: "Profile", icon: <User size={20} /> },
         { id: "users", label: "Manage Users", icon: <Users size={20} /> },
         { id: "tenders", label: "Manage Tenders", icon: <FileSpreadsheet size={20} /> },
+        { id: "pendingApplication", label: "Pending Application", icon: <FileSpreadsheet size={20} /> },
         { id: "logout", label: "Logout", icon: <LogOut size={20} /> },
     ];
 
     return (
-        <div className="w-60 h-full bg-white shadow-lg py-5 flex flex-col">
+        <div className="w-60 bg-white shadow-lg py-5 flex flex-col">
 
             <h2 className="text-2xl font-heading font-semibold mb-8 px-4">Admin Panel</h2>
 
@@ -41,6 +42,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     </button>
                 ))}
             </nav>
+
         </div>
     );
 };
