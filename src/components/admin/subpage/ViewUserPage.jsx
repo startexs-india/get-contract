@@ -96,9 +96,11 @@ const ViewUserPage = ({ setAddUserPage }) => {
                     <thead className="bg-gray-200 text-gray-700 font-semibold">
                         <tr>
                             <th className="p-3 text-left">User</th>
-                            <th className="p-3 text-left">Role</th>
-                            <th className="p-3 text-left">Subscription</th>
+                            <th className="p-3 text-left">Email</th>
+                            <th className="p-3 text-left">Subscription Plan</th>
+                            <th className="p-3 text-left">Joined Date</th>
                             <th className="p-3 text-left">End Date</th>
+                            <th className="p-3 text-left">Status</th>
                             <th className="p-3 text-right">Actions</th>
                         </tr>
                     </thead>

@@ -3,7 +3,6 @@ import { getAuthHeaders } from "./auth";
 
 export async function callApi(endpoint, method = "GET", data = null) {
     try {
-        // Normalize endpoint to avoid double slashes
         const normalizedEndpoint = endpoint.startsWith("/")
             ? endpoint.slice(1)
             : endpoint;
@@ -18,33 +17,41 @@ export async function callApi(endpoint, method = "GET", data = null) {
             },
         };
 
-        // Only attach body if data exists AND method is not GET
         if (data && method !== "GET") {
             options.body = JSON.stringify(data);
         }
 
         const res = await fetch(url, options);
 
-        // Handle non-200 responses
+        // 🚨 HANDLE UNAUTHORIZED (TOKEN EXPIRED)
+        if (res.status === 401) {
+            // Clear stored auth (adjust if you use cookies)
+            localStorage.removeItem("data");
+
+            // Redirect to admin login
+            window.location.replace("/admin");
+
+            // Stop further execution
+            throw new Error("Session expired. Redirecting to login...");
+        }
+
+        // Handle other errors
         if (!res.ok) {
             let errorMessage = `API Error: ${res.status}`;
 
             try {
                 const errorData = await res.json();
-                errorMessage += errorData?.message ? ` - ${errorData.message}` : "";
-            } catch (_) {
-                // ignore JSON parse error
-            }
+                if (errorData?.message) {
+                    errorMessage += ` - ${errorData.message}`;
+                }
+            } catch (_) { }
 
             throw new Error(errorMessage);
         }
 
-        // Parse JSON safely
-        const result = await res.json().catch(() => ({}));
-        return result;
+        return await res.json();
 
     } catch (error) {
-        //console.error("❌ API Call Failed:", error.message);
         throw error;
     }
 }

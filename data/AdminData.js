@@ -1,7 +1,7 @@
 export const statsDataStatic = [
     { title: "Total Users", value: 1240 },
     { title: "Active Tenders", value: 32 },
-    { title: "Assigned Tenders", value: 26 },
+    { title: "Pending Application", value: 26 },
     { title: "Prime Members", value: 14 },
 ];
 
@@ -1150,4 +1150,27 @@ export const dummyApplications = [
         ]
     }
 ]
+
+// data/circulars.js
+export const circulars = [
+    {
+        _id: "1",
+        title: "Tender Process Update",
+        description: "Updated guidelines for tender submission effective immediately.",
+        department: "Administration",
+        issueDate: "2025-12-10T10:00:00Z",
+        documentUrl: "/docs/tender-update.pdf",
+        status: "public"
+    },
+    {
+        _id: "2",
+        title: "Holiday Notice",
+        description: "Office will remain closed on 25th December.",
+        department: "HR",
+        issueDate: "2025-12-05T09:00:00Z",
+        documentUrl: "/docs/holiday.pdf",
+        status: "archived"
+    }
+];
+
 

@@ -8,9 +8,9 @@ import Logout from "./Logout";
 import Dashboard from "./Dashboard";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/AppContext";
-import { ArrowBigRightDash, SquareX } from "lucide-react";
 import Topbar from "./Topbar";
 import PendingApplication from "./PendingApplication";
+import CircularsPage from "./Circulars";
 
 const DashboardPanel = () => {
     const [activeTab, setActiveTab] = useState("dashboard");
@@ -55,15 +55,15 @@ const DashboardPanel = () => {
         <div className="flex bg-gray-100 h-screen overflow-hidden">
 
             {/* ---------- DESKTOP SIDEBAR (xl) ---------- */}
-            <div className="hidden xl:flex h-full">
+            {/* <div className="hidden xl:flex h-full">
                 <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-            </div>
+            </div> */}
 
             {/* ---------- RIGHT SIDE (Content + Tablet Topbar) ---------- */}
             <div className="flex-1 flex flex-col overflow-hidden">
 
                 {/* TABLET TOPBAR (md–xl) */}
-                <div className="flex xl:hidden sticky top-0 z-40 bg-white shadow-sm">
+                <div className="flex  sticky top-0 z-40 bg-white shadow-sm">
                     <Topbar activeTab={activeTab} setActiveTab={setActiveTab} />
                 </div>
 
@@ -76,6 +76,7 @@ const DashboardPanel = () => {
                     {activeTab === "users" && <ManageUser />}
                     {activeTab === "tenders" && <ManageTender />}
                     {activeTab === "pendingApplication" && <PendingApplication />}
+                    {activeTab === "circulars" && <CircularsPage />}
                     {activeTab === "logout" && <Logout />}
                 </div>
 

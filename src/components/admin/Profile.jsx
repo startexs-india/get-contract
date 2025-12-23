@@ -17,6 +17,7 @@ const Profile = () => {
     });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
+    const [updateLoading, setUpdateLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
     const fetchAdmin = async () => {
@@ -24,12 +25,13 @@ const Profile = () => {
         try {
             const response = await callApi(`/admin/${user.roleId}`, "GET");
             if (response.success) {
-                const user = response.data.user;
+                console.log(response);
+                const admin = response.data;
                 setAdminData({
-                    name: user.name || "",
-                    email: user.email || "",
-                    phone: user.phone || "",
-                    role: user.role || ""
+                    name: admin.name || "",
+                    email: admin.email || "",
+                    phone: admin.phone || "",
+                    role: admin.role || ""
                 });
             }
             else {
@@ -61,7 +63,7 @@ const Profile = () => {
         if (!editMode) return;
 
         try {
-            setLoading(true);
+            setUpdateLoading(true);
             const response = await callApi(
                 `/admin/${user.roleId}`,
                 "PATCH",
@@ -77,7 +79,7 @@ const Profile = () => {
         } catch (err) {
             setError(err.message);
         } finally {
-            setLoading(false);
+            setUpdateLoading(false);
         }
     };
 
@@ -96,8 +98,6 @@ const Profile = () => {
             </div>
         )
     }
-
-
 
     return (
         <div className="px-6 flex justify-center items-center animate-fadeIn">
@@ -196,6 +196,12 @@ const Profile = () => {
 
                 </div>
             </div>
+
+            {updateLoading &&
+                <div className="w-full h-full absolute left-0 bg-black/20">
+                    <Loader />
+                </div>
+            }
         </div>
     );
 };

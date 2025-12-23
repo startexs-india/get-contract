@@ -4,14 +4,13 @@ import { Eye } from "lucide-react";
 
 export default function TenderCard({ tender, onOpenTender }) {
     // Extracting safe values from schema
-    const title = tender?.generalInformation?.tenderTitle || "Untitled Tender";
+    const description = tender?.description || "Untitled Tender";
     const department =
-        tender?.generalInformation?.organizationHierarchy?.join(" → ") ||
+        tender?.department?.join(" → ") ||
         "Not Available";
 
     const deadline =
-        tender?.dateSchedule?.bidSubmissionDueDate?.formatted ||
-        tender?.dateSchedule?.bidSubmissionDueDate?.raw ||
+        tender?.endDate?.formatted ||
         "No Deadline";
 
     const status = tender?.status || "UNKNOWN";
@@ -19,7 +18,7 @@ export default function TenderCard({ tender, onOpenTender }) {
     const isPublic = tender?.isActive ?? false;
 
     return (
-        <tr className="hover:bg-gray-200 transition-all shadow-sm text-sm">
+        <tr className="hover:bg-gray-200 transition-all shadow-sm text-sm w-full">
 
             {/* Tender ID with Tooltip */}
             <td className="pl-5 font-semibold text-gray-700 relative group cursor-pointer">
@@ -28,13 +27,13 @@ export default function TenderCard({ tender, onOpenTender }) {
 
             {/* TITLE */}
             <td className="p-2 font-semibold text-gray-700">
-                <HoverText text={title} maxLength={30} />
+                <HoverText text={description} maxLength={40} />
             </td>
 
             {/* REFERENCE NO */}
             <td className="p-2 text-gray-600">
                 {/* {tender.generalInformation.tenderReferenceNo} */}
-                <HoverText text={tender.generalInformation.tenderReferenceNo} maxLength={15} />
+                <HoverText text={tender.tenderReferenceNo} maxLength={15} />
             </td>
 
             {/* DEPARTMENT */}

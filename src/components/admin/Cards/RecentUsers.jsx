@@ -25,7 +25,7 @@ const RecentUsers = ({ recentUsers }) => {
                     </thead>
 
                     <tbody>
-                        {recentUsers.map((user, index) => (
+                        {recentUsers?.map((user, index) => (
                             <motion.tr
                                 key={index}
                                 whileHover={{ backgroundColor: "#f3f4f6" }}

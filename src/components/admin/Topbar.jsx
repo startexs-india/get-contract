@@ -17,11 +17,12 @@ const Topbar = ({ activeTab, setActiveTab }) => {
         { id: "users", label: "Users", icon: <Users size={20} /> },
         { id: "tenders", label: "Tenders", icon: <FileSpreadsheet size={20} /> },
         { id: "pendingApplication", label: "PendingApplication", icon: <FileSpreadsheet size={20} /> },
+        { id: "circulars", label: "Circulars", icon: <FileSpreadsheet size={20} /> },
         { id: "logout", label: "Logout", icon: <LogOut size={20} /> },
     ];
 
     return (
-        <div className="w-full bg-white  shadow-md py-1 md:py-2 px-3 flex gap-3 overflow-x-auto 
+        <div className="w-full bg-[#0b5cbf]  shadow-md py-1 md:py-2 px-3 flex gap-3 overflow-x-auto 
             z-50 sticky top-0">
             {tabs.map((tab) => (
                 <button
@@ -31,7 +32,7 @@ const Topbar = ({ activeTab, setActiveTab }) => {
                         w-full rounded-lg transition
                         ${activeTab === tab.id
                             ? " bg-[#084c9d] text-white scale-105  shadow-sm"
-                            : "hover:bg-blue-200 text-black"
+                            : "hover:bg-[#0a55b1] text-white"
                         }`}
                 >
                     <div className="flex flex-col sm:flex-row sm:gap-2 items-center justify-between md:justify-around">

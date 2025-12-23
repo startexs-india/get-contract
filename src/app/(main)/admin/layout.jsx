@@ -6,9 +6,9 @@ const AdminLayout = ({ children }) => {
     return (
         <div className="bg-white min-h-screen text-black font-sans">
             <Navbar />
-            <div className='sticky top-0'>
+            {/* <div className='sticky top-0'>
                 <Header />
-            </div>
+            </div> */}
             {children}
         </div>
     );

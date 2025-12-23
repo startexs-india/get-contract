@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import React from 'react'
-
+import TenderCard from './TenderCard'
 
 const RecentTenders = ({ recentTenders }) => {
     return (
@@ -15,21 +15,36 @@ const RecentTenders = ({ recentTenders }) => {
                     Recent Tenders
                 </motion.h2>
 
-                <ul className="space-y-4">
-                    {recentTenders.map((tender, index) => (
-                        <motion.li
-                            key={index}
-                            whileHover={{ scale: 1.01 }}
-                            className="flex justify-between border-b pb-3 border-gray-200"
-                        >
-                            <span className="text-gray-700">{tender.name}</span>
-                            <span className={`font-semibold ${tender.color}`}>{tender.status}</span>
-                        </motion.li>
-                    ))}
-                </ul>
+                {/* 🔹 TENDER TABLE */}
+                <table className="w-full border-collapse bg-white rounded-sm">
+                    <thead>
+                        <tr className="text-left border-b-2 border-gray-400">
+                            <th className="pl-5">Tender/RFQ ID</th>
+                            <th className="p-2">Tender Description</th>
+                            <th className="p-2">Reference No.</th>
+                            <th className="p-2">Department</th>
+                            <th className="p-2">End Date</th>
+                            <th className="p-2">Status</th>
+                            {/* <th className="p-2">Visiablity</th> */}
+                            <th className="pr-5 p-2 text-end">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {recentTenders?.map((tender) => (
+                            <TenderCard
+                                key={tender._id}
+                                tender={tender}
+                                onOpenTender={() => setSelectedTenderId(tender._id)}
+                            />
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     )
 }
 
 export default RecentTenders
+
+

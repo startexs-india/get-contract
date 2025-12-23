@@ -21,13 +21,13 @@ export default function SingleUserPage({ userId, setViewUserModel }) {
             const response = await callApi(`/contractor/${userId}`, "GET");
 
             if (response.success) {
-                const user = response.data.user;
+                const user = response.data;
                 setUserData(user);
 
                 // if premium logic added later
                 setSubscription({
-                    active: user.isPremiumMember || false,
-                    endDate: user.premiumPlan || null
+                    //active: user.isPremiumMember || false,
+                    endDate: user?.premiumPlan || null
                 });
             } else {
                 setErrorMessage(response.message);
@@ -41,7 +41,7 @@ export default function SingleUserPage({ userId, setViewUserModel }) {
 
     useEffect(() => {
         if (userId) fetchUser();
-    }, [userId]);
+    }, []);
 
     // Close modal on outside click
     useEffect(() => {
@@ -107,10 +107,10 @@ export default function SingleUserPage({ userId, setViewUserModel }) {
                         value={userData.phoneVerified ? "Yes" : "No"}
                     />
 
-                    <Field
+                    {/* <Field
                         label="Premium Member"
-                        value={userData.isPremiumMember ? "Yes" : "No"}
-                    />
+                        value={userData?.isPremiumMember ? "Yes" : "No"}
+                    /> */}
 
                     <Field
                         label="Created At"
