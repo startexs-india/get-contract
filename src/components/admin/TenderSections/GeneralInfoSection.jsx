@@ -69,9 +69,9 @@ export default function GeneralInfoSection({ data = {}, editMode, onChange }) {
                 {renderField("Minimum Bids", "minimumNumberOfBids", minimumNumberOfBids)}
                 {renderField("Ranking Sequence", "rankingSequence", rankingSequence)}
                 {renderField("Offer Validity (Days)", "offerValidityInDays", offerValidityInDays)}
-                {renderField("Tender Creator", "tenderCreator", tenderCreator)}
+                {/* {renderField("Tender Creator", "tenderCreator", tenderCreator)} */}
                 {renderField("Issuing Authority", "tenderIssuingAuthorityName", tenderIssuingAuthorityName)}
-                {renderField("Approving Authority", "tenderApprovingAuthorityName", tenderApprovingAuthorityName)}
+                {/* {renderField("Approving Authority", "tenderApprovingAuthorityName", tenderApprovingAuthorityName)} */}
             </div>
 
             {/* Extra details in full width */}

@@ -6,18 +6,7 @@ import { UserRound, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import logo from "@/../public/logo.svg";
 import { useAppContext } from "@/context/AppContext";
-import {
-    FileText,
-    CheckSquare,
-    FolderTree,
-    BarChart2,
-    ClipboardList,
-    Hammer,
-    Crown,
-    HelpCircle,
-    BookOpen,
-    LogOut,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import AuthModel from "../auth/AuthModel";
 import { useRouter } from "next/navigation";
 
@@ -32,17 +21,6 @@ export default function Navbar() {
     const mobileMenuRef = useRef(null);
 
     const { isLogin, user, logout } = useAppContext();
-    const services = [
-        { name: "Live Tenders", href: "/tenders", icon: FileText },
-        { name: "Tender Results", href: "/tender-results", icon: CheckSquare },
-        { name: "Tender By Category", href: "/tender-category", icon: FolderTree },
-        { name: "Bid Analysis", href: "/bid-analysis", icon: BarChart2 },
-        { name: "My Bids", href: "/my-bids", icon: ClipboardList },
-        { name: "My Projects", href: "/projects", icon: Hammer },
-        { name: "Premium Plans", href: "/premium", icon: Crown },
-        { name: "Help & Support", href: "/support", icon: HelpCircle },
-        { name: "Documentation", href: "/documentation", icon: BookOpen },
-    ];
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -123,7 +101,7 @@ export default function Navbar() {
                     <button
                         //onClick={() => setIsAuthOpen(true)}
                         onClick={() => (route.push("/admin"))}
-                        className="bg-[#084c9d] text-white rounded-lg px-4 py-1 hover:bg-[#0b2543] text-xl"
+                        className="hidden md:flex bg-[#084c9d] text-white rounded-lg px-4 py-1 hover:bg-[#0b2543] text-xl"
                     >
                         Login
                     </button>
@@ -154,47 +132,10 @@ export default function Navbar() {
                             href="/"
                             className="px-6 py-3 border-b border-white/20 hover:bg-white/10 transition"
                         >
-                            Home
+                            Client Home
                         </Link>
 
-                        {/* Services Dropdown */}
-                        <div className="border-b border-white/20">
-                            <button
-                                onClick={() => setShowServices(!showServices)}
-                                className="w-full flex justify-between items-center px-6 py-3 hover:bg-white/10 transition"
-                            >
-                                <span>Services</span>
-                                <ChevronDown size={18} className={`${showServices ? "rotate-180" : ""} transition`} />
-                            </button>
 
-                            {showServices && (
-                                <div className="flex flex-col bg-[#0b4c8d]">
-                                    {services.map((service, index) => (
-                                        <Link
-                                            key={index}
-                                            href={service.href}
-                                            className="px-10 py-3 text-sm border-t border-white/10 hover:bg-white/10 transition"
-                                        >
-                                            {service.name}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <Link
-                            href="/about"
-                            className="px-6 py-3 border-b border-white/20 hover:bg-white/10 transition"
-                        >
-                            About
-                        </Link>
-
-                        <Link
-                            href="/contact"
-                            className="px-6 py-3 border-b border-white/20 hover:bg-white/10 transition"
-                        >
-                            Contact
-                        </Link>
                     </nav>
                 </div>
             )}

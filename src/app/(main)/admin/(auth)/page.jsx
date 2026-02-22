@@ -80,9 +80,9 @@ export default function AdminLoginPage() {
 
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className=" flex items-center justify-center">
             {/* CARD */}
-            <div className="bg-gray-100 p-8 rounded-xl shadow-md w-full max-w-md">
+            <div className="bg-gray-100 p-8 rounded-xl shadow-md w-full max-w-md mx-2 mt-6">
 
                 <div className='flex justify-center mb-3'>
                     <Image src={logo} alt='DT' width={60} />
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
                         Hi Admin,
                     </h2>
                     <span className='text-gray-600 text-xl'>
-                        Create you account 🔐
+                        Login your account 🔐
                     </span>
                 </div>
 
@@ -163,12 +163,12 @@ export default function AdminLoginPage() {
                 </form>
 
                 {/* Signup link */}
-                <p className="text-center text-[16px] text-gray-600 mt-4">
+                {/* <p className="text-center text-[16px] text-gray-600 mt-4">
                     Already have an account?{" "}
                     <Link href={"/admin"} className="text-blue-500 hover:underline cursor-pointer font-semibold">
                         LogIn
                     </Link>
-                </p>
+                </p> */}
             </div>
         </div>
     );

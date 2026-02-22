@@ -17,7 +17,7 @@ const Page = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-white text-white">
 
-            <div className="bg-gradient-to-br from-[#084c9d] to-[#0b2543] border border-white/10 rounded-2xl p-10 max-w-md w-full text-center shadow-2xl ">
+            <div className="bg-gradient-to-br from-[#084c9d] to-[#0b2543] border border-white/10 rounded-2xl p-10 max-w-md w-full text-center shadow-2xl mx-3 ">
 
                 {/* Icon */}
                 <div className="flex justify-center mb-6">

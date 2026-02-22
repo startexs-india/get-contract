@@ -1,9 +1,13 @@
 'use client'
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useState } from 'react'
 import TenderCard from './TenderCard'
+import SingleTenderViewPage from '../subpage/SingleTenderPage'
 
 const RecentTenders = ({ recentTenders }) => {
+
+    const [selectedTenderId, setSelectedTenderId] = useState(null);
+
     return (
         <div>
             <div className="bg-white shadow-md rounded-xl p-6 mb-6 border border-gray-200">
@@ -40,6 +44,14 @@ const RecentTenders = ({ recentTenders }) => {
                         ))}
                     </tbody>
                 </table>
+
+                {/* 🔹 SINGLE TENDER VIEW / EDIT MODAL */}
+                {selectedTenderId && (
+                    <SingleTenderViewPage
+                        tender_id={selectedTenderId}
+                        onClose={() => setSelectedTenderId(null)}
+                    />
+                )}
             </div>
         </div>
     )

@@ -244,11 +244,11 @@ export default function SingleTenderViewPage({ tender_id, onClose }) {
                                         onChange={(field, value) => update("dateSchedule", field, value)}
                                     />
 
-                                    <PreBidSection
+                                    {/* <PreBidSection
                                         data={form.preBidDiscussion}
                                         editMode={editMode}
                                         onChange={(field, value) => update("preBidDiscussion", field, value)}
-                                    />
+                                    /> */}
 
                                     <PaymentsSection
                                         data={form.payments}
@@ -258,13 +258,13 @@ export default function SingleTenderViewPage({ tender_id, onClose }) {
                                         }
                                     />
 
-                                    <GeneralParticularsSection
+                                    {/* <GeneralParticularsSection
                                         data={form.generalParticulars}
                                         editMode={editMode}
                                         onChange={(index, field, value) =>
                                             updateArray("generalParticulars", index, field, value)
                                         }
-                                    />
+                                    /> */}
 
                                     <TermsConditionsSection
                                         data={form.termsAndConditions}
@@ -274,13 +274,13 @@ export default function SingleTenderViewPage({ tender_id, onClose }) {
                                         }
                                     />
 
-                                    <AttachmentsSection
+                                    {/* <AttachmentsSection
                                         data={form.attachments}
                                         editMode={editMode}
                                         onChange={(index, field, value) =>
                                             updateArray("attachments", index, field, value)
                                         }
-                                    />
+                                    /> */}
 
                                     <RequiredAttachmentsSection
                                         data={form.requiredAttachments}
@@ -290,13 +290,13 @@ export default function SingleTenderViewPage({ tender_id, onClose }) {
                                         }
                                     />
 
-                                    <BoqSection
+                                    {/* <BoqSection
                                         data={form.boq}
                                         editMode={editMode}
                                         onChange={(index, field, value) =>
                                             updateArray("boq", index, field, value)
                                         }
-                                    />
+                                    /> */}
                                 </>
                             )}
 

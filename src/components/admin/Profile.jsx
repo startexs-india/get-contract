@@ -15,6 +15,14 @@ const Profile = () => {
         phone: "",
         role: ""
     });
+
+    const [adminOldData, setAdminOldData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        role: ""
+    });
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
     const [updateLoading, setUpdateLoading] = useState(false);
@@ -28,6 +36,12 @@ const Profile = () => {
                 console.log(response);
                 const admin = response.data;
                 setAdminData({
+                    name: admin.name || "",
+                    email: admin.email || "",
+                    phone: admin.phone || "",
+                    role: admin.role || ""
+                });
+                setAdminOldData({
                     name: admin.name || "",
                     email: admin.email || "",
                     phone: admin.phone || "",
@@ -61,6 +75,20 @@ const Profile = () => {
 
     const handleSubmit = async () => {
         if (!editMode) return;
+
+        if (adminData.name.trim() === "" || adminData.email.trim() === "" || adminData.phone.trim() === "") {
+            alert("All fields are required.");
+            return;
+        }
+        if (adminData.name === adminOldData.name && adminData.email === adminOldData.email && adminData.phone === adminOldData.phone) {
+            alert("No changes detected.");
+            return;
+        }
+
+        if (adminData.phone.length !== 10 || !/^\d+$/.test(adminData.phone)) {
+            alert("Phone number must be exactly 10 digits and contain only numbers.");
+            return;
+        }
 
         try {
             setUpdateLoading(true);
@@ -158,6 +186,7 @@ const Profile = () => {
                             onChange={handleChange}
                             disabled={!editMode}
                             maxLength={10}
+                            minLength={10}
                             placeholder="Phone without +91"
                             className={`w-full px-4 py-2 border rounded-xl transition outline-none 
                                 ${editMode ? "border-blue-500 focus:border-blue-600" : "border-gray-200 bg-gray-100 cursor-not-allowed"}`}
