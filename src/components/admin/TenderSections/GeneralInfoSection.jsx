@@ -19,6 +19,7 @@ export default function GeneralInfoSection({ data = {}, editMode, onChange }) {
         tenderIssuingAuthorityName,
         tenderApprovingAuthorityName,
         detailedDescription,
+        externalSystemDisplayTenderId,
         shortTenderReason,
         NIT,
         organizationHierarchy,
@@ -58,9 +59,9 @@ export default function GeneralInfoSection({ data = {}, editMode, onChange }) {
             <h2 className="text-xl font-semibold mb-3">General Information</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 border border-gray-300">
-                {renderField("Tender Title", "tenderTitle", tenderTitle)}
+                {/* {renderField("Tender Title", "tenderTitle", tenderTitle)} */}
                 {renderField("Reference No.", "tenderReferenceNo", tenderReferenceNo)}
-                {renderField("System Tender No.", "systemTenderNo", systemTenderNo)}
+                {renderField("System Tender No.", "systemTenderNo", externalSystemDisplayTenderId)}
                 {renderField("Tender Type", "tenderType", tenderType)}
                 {renderField("Procurement Category", "procurementCategory", procurementCategory)}
                 {renderField("Tender Currency", "tenderCurrency", tenderCurrency)}
