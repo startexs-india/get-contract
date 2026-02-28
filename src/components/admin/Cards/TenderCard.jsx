@@ -22,7 +22,7 @@ export default function TenderCard({ tender, onOpenTender }) {
 
             {/* Tender ID with Tooltip */}
             <td className="pl-5 font-semibold text-gray-700 relative group cursor-pointer">
-                <HoverText text={tender?.tenderId} maxLength={12} />
+                <HoverText text={tender?.externalSystemDisplayTenderId} maxLength={12} />
             </td>
 
             {/* TITLE */}

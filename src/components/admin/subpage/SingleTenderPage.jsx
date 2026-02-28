@@ -233,7 +233,7 @@ export default function SingleTenderViewPage({ tender_id, onClose }) {
                             {form && (
                                 <>
                                     <GeneralInfoSection
-                                        data={form.generalInformation}
+                                        data={{ ...form.generalInformation, externalSystemDisplayTenderId: form?.externalSystemDisplayTenderId }}
                                         editMode={editMode}
                                         onChange={(field, value) => update("generalInformation", field, value)}
                                     />
