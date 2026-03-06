@@ -91,12 +91,13 @@ export default function UserCard({
             </td>
 
             {/* MEMBERSHIP */}
-            <td className="p-3">
+
+            {/* <td className="p-3">
                 {user.isPremiumMember ? (
                     <span className="inline-flex items-center gap-2 px-3 py-1 text-sm font-medium 
             rounded-md bg-purple-100 text-purple-700 border border-purple-300">
                         <Crown size={14} />
-                        {/* {user.premiumPlan} */}
+                       
                         MONTHLY
                     </span>
                 ) : (
@@ -105,7 +106,7 @@ export default function UserCard({
                         Free
                     </span>
                 )}
-            </td>
+            </td> */}
 
             {/* JOINED DATE */}
             <td className="p-3 text-gray-700">

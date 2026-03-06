@@ -143,6 +143,7 @@ export default function ViewTenderPage({ setAddTender }) {
                     <tr className="text-left border-b-2 border-gray-400">
                         <th className="pl-5">Tender/RFQ ID</th>
                         <th className="p-2">Tender Description</th>
+                        <th className="p-2">By Amount</th>
                         <th className="p-2">Reference No.</th>
                         <th className="p-2">Department</th>
                         <th className="p-2">End Date</th>

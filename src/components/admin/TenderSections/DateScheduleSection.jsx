@@ -1,4 +1,5 @@
 "use client";
+import { formatDateTime } from "@/utils/formatDate";
 import React from "react";
 
 export default function DateScheduleSection({ data = {}, editMode, onChange }) {
@@ -52,8 +53,8 @@ export default function DateScheduleSection({ data = {}, editMode, onChange }) {
 
                                 {/* Value */}
                                 <td className="border px-4 py-2">
-                                    {!editMode ? (
-                                        getFormatted(row.value)
+                                    {/* {!editMode ? (
+                                        formatDateTime(row.value)
                                     ) : (
                                         <input
                                             type="datetime-local"
@@ -66,7 +67,9 @@ export default function DateScheduleSection({ data = {}, editMode, onChange }) {
                                                 })
                                             }
                                         />
-                                    )}
+                                    )} */}
+                                    {/* {formatDateTime(row.value)} */}
+                                    {formatDateTime(getFormatted(row.value))}
                                 </td>
                             </tr>
                         ))}

@@ -1,5 +1,6 @@
 "use client";
 import { HoverText } from "@/components/ui/HoverText";
+import { formatDateTime } from "@/utils/formatDate";
 import { Eye } from "lucide-react";
 
 export default function TenderCard({ tender, onOpenTender }) {
@@ -27,7 +28,12 @@ export default function TenderCard({ tender, onOpenTender }) {
 
             {/* TITLE */}
             <td className="p-2 font-semibold text-gray-700">
-                <HoverText text={description} maxLength={40} />
+                <HoverText text={description} maxLength={35} />
+            </td>
+
+            {/* Amount */}
+            <td className="p-2 font-semibold text-gray-700">
+                <HoverText text={tender?.amount} maxLength={40} />
             </td>
 
             {/* REFERENCE NO */}
@@ -38,12 +44,12 @@ export default function TenderCard({ tender, onOpenTender }) {
 
             {/* DEPARTMENT */}
             <td className="p-2 text-gray-600">
-                <HoverText text={department} maxLength={30} />
+                <HoverText text={department} maxLength={25} />
             </td>
 
             {/* DEADLINE */}
             <td className="p-2 text-gray-700">
-                {deadline}
+                {formatDateTime(deadline)} {/* Format the date as needed */}
             </td>
 
             {/* STATUS */}

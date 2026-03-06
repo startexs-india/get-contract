@@ -1,4 +1,5 @@
 "use client";
+import { HoverText } from "@/components/ui/HoverText";
 import React from "react";
 
 export default function GeneralInfoSection({ data = {}, editMode, onChange }) {
@@ -59,19 +60,19 @@ export default function GeneralInfoSection({ data = {}, editMode, onChange }) {
             <h2 className="text-xl font-semibold mb-3">General Information</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 border border-gray-300">
-                {/* {renderField("Tender Title", "tenderTitle", tenderTitle)} */}
+                {/* {renderField("Tender Title", "tenderTitle", HoverText({ text: tenderTitle, maxLength: 50 }), true)} */}
                 {renderField("Reference No.", "tenderReferenceNo", tenderReferenceNo)}
-                {renderField("System Tender No.", "systemTenderNo", externalSystemDisplayTenderId)}
-                {renderField("Tender Type", "tenderType", tenderType)}
-                {renderField("Procurement Category", "procurementCategory", procurementCategory)}
-                {renderField("Tender Currency", "tenderCurrency", tenderCurrency)}
-                {renderField("Bidding Currency", "biddingCurrency", biddingCurrency)}
-                {renderField("Estimated Value Visibility", "estimatedValueVisibilityFlag", estimatedValueVisibilityFlag)}
-                {renderField("Minimum Bids", "minimumNumberOfBids", minimumNumberOfBids)}
-                {renderField("Ranking Sequence", "rankingSequence", rankingSequence)}
+                {/* {renderField("System Tender No.", "systemTenderNo", externalSystemDisplayTenderId)} */}
+                {/* {renderField("Tender Type", "tenderType", tenderType)} */}
+                {/* {renderField("Procurement Category", "procurementCategory", procurementCategory)} */}
+                {/* {renderField("Tender Currency", "tenderCurrency", tenderCurrency)} */}
+                {/* {renderField("Bidding Currency", "biddingCurrency", biddingCurrency)} */}
+                {/* {renderField("Estimated Value Visibility", "estimatedValueVisibilityFlag", estimatedValueVisibilityFlag)} */}
+                {/* {renderField("Minimum Bids", "minimumNumberOfBids", minimumNumberOfBids)} */}
+                {/* {renderField("Ranking Sequence", "rankingSequence", rankingSequence)} */}
                 {renderField("Offer Validity (Days)", "offerValidityInDays", offerValidityInDays)}
                 {/* {renderField("Tender Creator", "tenderCreator", tenderCreator)} */}
-                {renderField("Issuing Authority", "tenderIssuingAuthorityName", tenderIssuingAuthorityName)}
+                {/* {renderField("Issuing Authority", "tenderIssuingAuthorityName", tenderIssuingAuthorityName)} */}
                 {/* {renderField("Approving Authority", "tenderApprovingAuthorityName", tenderApprovingAuthorityName)} */}
             </div>
 
