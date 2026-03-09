@@ -1,89 +1,100 @@
 "use client";
-import { HoverText } from "@/components/ui/HoverText";
 import { formatDateTime } from "@/utils/formatDate";
 import { Eye } from "lucide-react";
 
 export default function TenderCard({ tender, onOpenTender }) {
-    // Extracting safe values from schema
+
     const description = tender?.description || "Untitled Tender";
+
     const department =
-        tender?.department?.join(" → ") ||
-        "Not Available";
+        tender?.department?.join(" → ") || "Not Available";
 
     const deadline =
-        tender?.endDate?.formatted ||
-        "No Deadline";
+        tender?.endDate?.formatted || "No Deadline";
 
     const status = tender?.status || "UNKNOWN";
 
-    const isPublic = tender?.isActive ?? false;
-
     return (
-        <tr className="hover:bg-gray-200 transition-all shadow-sm text-sm w-full">
+        <tr className="hover:bg-gray-200 transition-all text-sm w-full">
 
-            {/* Tender ID with Tooltip */}
-            <td className="pl-5 font-semibold text-gray-700 relative group cursor-pointer">
-                <HoverText text={tender?.externalSystemDisplayTenderId} maxLength={12} />
+            {/* Tender ID */}
+            <td className="pl-5 font-semibold text-gray-700">
+                <span
+                    title={tender?.externalSystemDisplayTenderId}
+                    className="block truncate max-w-full"
+                >
+                    {tender?.externalSystemDisplayTenderId}
+                </span>
             </td>
 
-            {/* TITLE */}
+            {/* DESCRIPTION */}
             <td className="p-2 font-semibold text-gray-700">
-                <HoverText text={description} maxLength={35} />
+                <span
+                    title={description}
+                    className="block truncate max-w-full"
+                >
+                    {description}
+                </span>
             </td>
 
-            {/* Amount */}
-            <td className="p-2 font-semibold text-gray-700">
-                <HoverText text={tender?.amount} maxLength={40} />
+            {/* AMOUNT */}
+            <td className="p-2 text-gray-700">
+                <span
+                    title={tender?.amount}
+                    className="block truncate max-w-full"
+                >
+                    {tender?.amount ? `$${tender.amount}` : "Not Available"}
+                </span>
             </td>
 
             {/* REFERENCE NO */}
             <td className="p-2 text-gray-600">
-                {/* {tender.generalInformation.tenderReferenceNo} */}
-                <HoverText text={tender.tenderReferenceNo} maxLength={15} />
+                <span
+                    title={tender?.tenderReferenceNo}
+                    className="block truncate max-w-full"
+                >
+                    {tender?.tenderReferenceNo}
+                </span>
             </td>
 
             {/* DEPARTMENT */}
             <td className="p-2 text-gray-600">
-                <HoverText text={department} maxLength={25} />
+                <span
+                    title={department}
+                    className="block truncate max-w-full"
+                >
+                    {department}
+                </span>
             </td>
 
             {/* DEADLINE */}
             <td className="p-2 text-gray-700">
-                {formatDateTime(deadline)} {/* Format the date as needed */}
+                {formatDateTime(deadline)}
             </td>
 
             {/* STATUS */}
             <td className="p-2">
-                <span
-                    className={`px-2 py-1 rounded-md font-medium ${status === "ACTIVE"
-                        ? "bg-green-100 text-green-700"
-                        : status === "PENDING"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : status === "CANCELLED"
-                                ? "bg-red-100 text-red-700"
-                                : status === "CLOSED"
-                                    ? "bg-gray-300 text-gray-700"
-                                    : "bg-gray-100 text-gray-600"
-                        }`}
-                >
-                    {status}
-                </span>
+                {status === "PUBLISHED" ? (
+                    <span className="px-2 py-1 text-xs bg-green-100 border border-green-900 text-green-800 rounded-full">
+                        Public
+                    </span>
+                ) : (
+                    <span className="px-2 py-1 text-xs bg-gray-100 border border-gray-700 text-gray-600 rounded-full">
+                        Private
+                    </span>
+                )}
             </td>
 
-            {/* PUBLIC / PRIVATE */}
-            {/* <td className="p-2">
-                {isPublic ? "✔ Public" : "❌ Private"}
-            </td> */}
-
-            {/* VIEW BUTTON */}
-            <td className="pr-5 p-2 flex justify-end">
+            {/* ACTION */}
+            <td className="pr-5 p-2 flex justify-end items-center">
                 <button
                     onClick={() => onOpenTender(tender._id)}
-                    className="px-4 py-2 bg-[#2e5f9b] hover:bg-[#084c9d] text-white rounded-lg transition-all cursor-pointer flex items-center gap-1"
+                    className="px-3 py-2 bg-[#2e5f9b] hover:bg-[#084c9d] text-white rounded-lg transition-all flex items-center gap-1"
                 >
                     <Eye size={18} />
                 </button>
             </td>
+
         </tr>
     );
 }

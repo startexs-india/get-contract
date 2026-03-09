@@ -9,6 +9,7 @@ import UploadExcel from "../Cards/UploadExcel";
 import SingleTenderPage from "./SingleTenderPage";
 import { callApi } from "@/utils/api";
 import Loader from "@/components/common/Loader";
+import TenderCardMobile from "../Cards/TenderCardMobile";
 
 export default function ViewTenderPage({ setAddTender }) {
 
@@ -18,31 +19,51 @@ export default function ViewTenderPage({ setAddTender }) {
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedTenderId, setSelectedTenderId] = useState(null);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
 
-    const fetchAllTenders = async () => {
+    const limit = 20;
+    const visiblePages = 3;
+    let startPage = Math.max(1, page - Math.floor(visiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + visiblePages - 1);
+    if (endPage - startPage < visiblePages - 1) {
+        startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+
+
+    const fetchAllTenders = async (currentPage = 1) => {
         setLoading(true);
         setErrorMessage("");
 
         try {
-            const response = await callApi("/tender/list", "GET");
+
+            const response = await callApi(
+                `/tender/list?page=${currentPage}&limit=${limit}`,
+                "GET"
+            );
 
             if (response?.success) {
+
                 setTenders(response.data);
+                const totalCount = response.meta.total;
+                setTotal(totalCount);
+                setTotalPages(Math.ceil(totalCount / limit));
+
             } else {
                 setErrorMessage(response?.message || "Error fetching tenders");
             }
+
         } catch (error) {
             setErrorMessage(error?.message || "Server Error");
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
-
     };
 
     useEffect(() => {
-        fetchAllTenders();
-    }, []);
+        fetchAllTenders(page);
+    }, [page]);
 
 
     useEffect(() => {
@@ -58,16 +79,44 @@ export default function ViewTenderPage({ setAddTender }) {
 
     // FIXED SEARCH — now searches inside your schema correctly
     const filteredTenders = tenders?.filter((t) => {
-        const title = t?.generalInformation?.tenderTitle || "";
-        const desc = t?.generalInformation?.detailedDescription || "";
-        const status = t?.status || "";
+        const departments = t?.department || [];
+        const desc = t?.description || "";
+        const tenderReferenceNo = t?.tenderReferenceNo || "";
+        const externalSystemDisplayTenderId = t?.externalSystemDisplayTenderId || "";
+
+        const searchText = search.toLowerCase();
+
+        const departmentMatch = departments.some((dept) =>
+            dept.toLowerCase().includes(searchText)
+        );
 
         return (
-            title.toLowerCase().includes(search.toLowerCase()) ||
-            desc.toLowerCase().includes(search.toLowerCase()) ||
-            status.toLowerCase().includes(search.toLowerCase())
+            departmentMatch ||
+            desc.toLowerCase().includes(searchText) ||
+            tenderReferenceNo.toLowerCase().includes(searchText)
+            || externalSystemDisplayTenderId.toLowerCase().includes(searchText)
         );
     });
+
+
+    const startResizing = (index) => (e) => {
+        const startX = e.clientX;
+        const col = document.querySelectorAll("col")[index];
+        const startWidth = col.offsetWidth;
+
+        const onMouseMove = (e) => {
+            const newWidth = startWidth + (e.clientX - startX);
+            col.style.width = `${newWidth}px`;
+        };
+
+        const onMouseUp = () => {
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+        };
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+    };
 
     if (loading) {
         return (
@@ -102,25 +151,27 @@ export default function ViewTenderPage({ setAddTender }) {
                     {/* Upload Excel */}
                     <button
                         onClick={() => setOpenUpload(true)}
-                        className="flex items-center gap-2 bg-[#2e5f9b] text-white px-4 py-2 rounded-lg hover:bg-[#084c9d]"
+                        className="flex items-center gap-2 bg-[#2e5f9b] text-white px-2 py-1 rounded-md hover:bg-[#084c9d]"
                     >
                         <PlusCircle size={20} />
-                        <span className="flex">Upload Excel</span>
+                        <span className="hidden md:flex">Upload</span>
+                        <span className="flex"> Excel</span>
                     </button>
 
                     {/* Add New Tender */}
                     <button
                         onClick={() => setAddTender(true)}
-                        className="flex items-center gap-2 bg-[#2e5f9b] text-white px-4 py-2 rounded-lg hover:bg-[#084c9d]"
+                        className="flex items-center gap-2 bg-[#2e5f9b] text-white px-2 py-1 rounded-md hover:bg-[#084c9d]"
                     >
                         <PlusCircle size={20} />
-                        <span className="flex">New Tender</span>
+                        <span className="hidden md:flex">New </span>
+                        <span className="flex">Tender</span>
                     </button>
 
                     {/* Export Excel */}
                     <button
                         onClick={() => exportToExcel(filteredTenders)}
-                        className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                        className="flex items-center gap-2 bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600"
                     >
                         <FileSpreadsheet size={18} />
                         <span className="flex">Excel</span>
@@ -129,7 +180,7 @@ export default function ViewTenderPage({ setAddTender }) {
                     {/* Export PDF */}
                     <button
                         onClick={() => exportToPDF(filteredTenders)}
-                        className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                        className="flex items-center gap-2 bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
                     >
                         <FileText size={18} />
                         <span className="flex">PDF</span>
@@ -137,32 +188,164 @@ export default function ViewTenderPage({ setAddTender }) {
                 </div>
             </div>
 
-            {/* 🔹 TENDER TABLE */}
-            <table className="w-full border-collapse bg-white rounded-sm">
-                <thead>
-                    <tr className="text-left border-b-2 border-gray-400">
-                        <th className="pl-5">Tender/RFQ ID</th>
-                        <th className="p-2">Tender Description</th>
-                        <th className="p-2">By Amount</th>
-                        <th className="p-2">Reference No.</th>
-                        <th className="p-2">Department</th>
-                        <th className="p-2">End Date</th>
-                        <th className="p-2">Status</th>
-                        {/* <th className="p-2">Visiablity</th> */}
-                        <th className="pr-5 p-2 text-end">Action</th>
-                    </tr>
-                </thead>
+            {/* 🔹 TENDER TABLE FOR DEAKTOP SCREEN */}
+            <div className="overflow-x-auto">
+                <table className=" w-full table-fixed border-collapse bg-white rounded-sm">
+                    <colgroup>
+                        <col style={{ width: "150px" }} />
+                        <col style={{ width: "300px" }} />
+                        <col style={{ width: "120px" }} />
+                        <col style={{ width: "180px" }} />
+                        <col style={{ width: "220px" }} />
+                        <col style={{ width: "160px" }} />
+                        <col style={{ width: "90px" }} />
+                        <col style={{ width: "50px" }} />
+                    </colgroup>
+                    <thead>
+                        <tr className="text-left border-b-2 border-gray-200 text-sm lg:text-[16px]">
+                            <th className="pl-5 relative border-r-2 border-gray-400">Tender/RFQ ID
+                                <div
+                                    onMouseDown={startResizing(0)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                /></th>
+                            <th className="p-2 relative border-r-2 border-gray-300 ">Tender Description
+                                <div
+                                    onMouseDown={startResizing(1)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                /></th>
+                            <th className="p-2 relative border-r-2 border-gray-300">By Amount
+                                <div
+                                    onMouseDown={startResizing(2)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                />
+                            </th>
+                            <th className="p-2 relative border-r-2 border-gray-300">Reference No.
+                                <div
+                                    onMouseDown={startResizing(3)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                />
+                            </th>
+                            <th className="p-2 relative border-r-2 border-gray-300">Department
+                                <div
+                                    onMouseDown={startResizing(4)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                />
+                            </th>
+                            <th className="p-2 relative border-r-2 border-gray-300">End Date
+                                <div
+                                    onMouseDown={startResizing(5)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                />
+                            </th>
+                            <th className="p-2 relative border-r-2 border-gray-300">Status
+                                <div
+                                    onMouseDown={startResizing(6)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                />
+                            </th>
+                            {/* <th className="p-2">Visiablity</th> */}
+                            <th className="pr-5 p-2 relative">Action
+                                <div
+                                    onMouseDown={startResizing(7)}
+                                    className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize hover:bg-blue-400"
+                                />
+                            </th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {filteredTenders?.map((tender) => (
-                        <TenderCard
-                            key={tender._id}
-                            tender={tender}
-                            onOpenTender={() => setSelectedTenderId(tender._id)}
-                        />
-                    ))}
-                </tbody>
-            </table>
+                    <tbody>
+                        {filteredTenders?.map((tender) => (
+                            <TenderCard
+                                key={tender._id}
+                                tender={tender}
+                                onOpenTender={() => setSelectedTenderId(tender._id)}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* 🔹 TENDER TABLE FOR MOBILE SCREEN */}
+            {/* <div className="lg:hidden flex flex-col gap-3">
+                {filteredTenders?.map((tender) => (
+                    <TenderCardMobile
+                        key={tender._id}
+                        tender={tender}
+                        onOpenTender={() => setSelectedTenderId(tender._id)}
+                    />
+                ))}
+            </div> */}
+
+            <p className="w-full justify-end text-end text-sm p-2 text-black">
+                Showing {(page - 1) * limit + 1} -
+                {Math.min(page * limit, total)} of {total} tenders
+            </p>
+
+
+            {/* Paginaiton code */}
+            <div className="w-full flex justify-end gap-2">
+
+                <button
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                    className="px-2 py-1 border rounded disabled:opacity-40"
+                >
+                    Prev
+                </button>
+
+                {startPage > 1 && (
+                    <>
+                        <button
+                            onClick={() => setPage(1)}
+                            className="px-2 py-1 border rounded"
+                        >
+                            1
+                        </button>
+
+                        {startPage > 2 && <span className="px-2">...</span>}
+                    </>
+                )}
+
+                {Array.from({ length: endPage - startPage + 1 }, (_, i) => {
+                    const pageNumber = startPage + i;
+
+                    return (
+                        <button
+                            key={pageNumber}
+                            onClick={() => setPage(pageNumber)}
+                            className={`flex gap-1 px-2 py-1 border rounded ${page === pageNumber
+                                ? "text-blue-500"
+                                : ""
+                                }`}
+                        >
+                            {pageNumber}
+                        </button>
+                    );
+                })}
+
+                {endPage < totalPages && (
+                    <>
+                        {endPage < totalPages - 1 && (
+                            <span className="px-2">...</span>
+                        )}
+
+                        <button
+                            onClick={() => setPage(totalPages)}
+                            className="px-2 py-1 border rounded"
+                        >
+                            {totalPages}
+                        </button>
+                    </>
+                )}
+
+                <button
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                    className="px-2 py-1 border rounded disabled:opacity-40"
+                >
+                    Next
+                </button>
+            </div>
 
             {/* 🔹 UPLOAD EXCEL MODAL */}
             {openUpload && (

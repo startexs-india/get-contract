@@ -55,15 +55,13 @@ const ViewUserPage = ({ setAddUserPage }) => {
     }, [selectedUserId]);
 
     // FIXED SEARCH — now searches inside your schema correctly
-    const filteredUsers = users?.filter((t) => {
-        const title = t?.generalInformation?.tenderTitle || "";
-        const desc = t?.generalInformation?.detailedDescription || "";
-        const status = t?.status || "";
+    const filteredUsers = users?.filter((u) => {
+        const name = u?.name || "";
+        const email = u?.email || "";
 
         return (
-            title.toLowerCase().includes(search.toLowerCase()) ||
-            desc.toLowerCase().includes(search.toLowerCase()) ||
-            status.toLowerCase().includes(search.toLowerCase())
+            name.toLowerCase().includes(search.toLowerCase()) ||
+            email.toLowerCase().includes(search.toLowerCase())
         );
     });
 
@@ -78,8 +76,15 @@ const ViewUserPage = ({ setAddUserPage }) => {
     return (
         <div className="px-2">
 
-            {/* ADD USER BUTTON */}
-            <div className="w-full flex justify-end mb-5">
+            <div className="w-full flex justify-between items-center mb-5 gap-2">
+                <input
+                    type="text"
+                    placeholder="Search User..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="border p-2 w-full rounded-lg max-w-[400px]"
+                />
+
                 <button
                     onClick={() => setAddUserPage(true)}
                     className="flex items-center gap-2 bg-[#2e5f9b] text-white px-4 py-2 rounded-lg hover:bg-[#084c9d]"
@@ -88,10 +93,12 @@ const ViewUserPage = ({ setAddUserPage }) => {
                     <span className="hidden lg:flex">Add User</span>
                     <span className="flex lg:hidden">Add</span>
                 </button>
+
             </div>
 
+
             {/* TABLE */}
-            <div className="bg-white shadow-md rounded-lg overflow-hidden ">
+            <div className="bg-white shadow-md rounded-lg overflow-x-auto ">
                 <table className="w-full">
                     <thead className="bg-gray-200 text-gray-700 font-semibold">
                         <tr>
